@@ -18,10 +18,22 @@ steps:
   - script: |
       npm install
       npm run build
-    displayName: 'Install and build'
+    displayName: 'Install and build frontend'
+
+  - script: |
+      cd backend
+      npm install
+    displayName: 'Install backend dependencies'
 
   - script: |
       sudo rm -rf /var/www/html/*
       sudo cp -r build/* /var/www/html/
       sudo systemctl restart nginx
-    displayName: 'Deploy to VM'
+    displayName: 'Deploy frontend to VM'
+
+  - script: |
+      cd backend
+      pm2 stop pharmacy-backend || true
+      pm2 start server.js --name "pharmacy-backend"
+      pm2 save
+    displayName: 'Start backend server'
