@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const sql = require("mysql2");
+const sql = require("mssql");
 
 const app = express();
 
@@ -10,14 +10,18 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
 
-const db = sql.createConnection({
-    "user":"root",
-    "host":"127.0.0.1",
-    "password":"MySQL@2025",
-    "port":"3306",
-    "database":"pharmacy_db"
 
-})
+const config = {
+    user: "ShristiMishra",
+    password: "your-database-password",
+    server: "pharmacydatabase.database.windows.net",
+    database: "MyDatabase",
+    port: 1433,
+    options: {
+        encrypt: true,
+        trustServerCertificate: false
+    }
+}
 
 db.connect((err)=>{
     if(err){
