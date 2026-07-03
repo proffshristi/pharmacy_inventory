@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 // Azure SQL connection config
 const config = {
     user: "ShristiMishra",
-    password: "Shristi2001@",
+    password: "NewPassword123!",
     server: "pharmacydatabase.database.windows.net",
     database: "MyDatabase",
     port: 1433,
