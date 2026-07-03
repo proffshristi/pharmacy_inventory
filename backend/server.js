@@ -16,6 +16,8 @@ const config = {
     server: "pharmacydatabase.database.windows.net",
     database: "MyDatabase",
     port: 1433,
+    connectionTimeout: 60000,  
+    requestTimeout: 60000,    
     options: {
         encrypt: true,
         trustServerCertificate: false
@@ -32,8 +34,13 @@ async function connectDB() {
         console.log("Error connecting to database:", err.message);
     }
 }
-connectDB();
 
+// Wait for DB to connect FIRST, then start server
+connectDB().then(() => {
+    app.listen(portNo, () => {
+        console.log("Server running on port", portNo);
+    });
+});
 // GET all medicines
 app.get("/data", async (req, res) => {
     try {
@@ -104,6 +111,4 @@ app.put("/data/:id", async (req, res) => {
     }
 });
 
-app.listen(portNo, () => {
-    console.log("Server running on port", portNo);
-});
+
